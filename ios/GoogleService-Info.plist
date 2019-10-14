@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>738366235844-kmlrfq4rl5b1b60kji13dq457nuimt6b.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.738366235844-kmlrfq4rl5b1b60kji13dq457nuimt6b</string>
+	<key>API_KEY</key>
+	<string>AIzaSyAQBZoC-NBc96qGPskpUCeXo4DbJ3ROpHc</string>
+	<key>GCM_SENDER_ID</key>
+	<string>738366235844</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>org.reactjs.native.example.UrbavitaChat</string>
+	<key>PROJECT_ID</key>
+	<string>chatapplication-a05f3</string>
+	<key>STORAGE_BUCKET</key>
+	<string>chatapplication-a05f3.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:738366235844:ios:4ddac911cac3dfd31a9591</string>
+	<key>DATABASE_URL</key>
+	<string>https://chatapplication-a05f3.firebaseio.com</string>
+</dict>
+</plist>

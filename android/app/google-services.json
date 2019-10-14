@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "738366235844",
+    "firebase_url": "https://chatapplication-a05f3.firebaseio.com",
+    "project_id": "chatapplication-a05f3",
+    "storage_bucket": "chatapplication-a05f3.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:738366235844:android:07c643d218ed17031a9591",
+        "android_client_info": {
+          "package_name": "com.urbavitachat"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "738366235844-irtcju16vj3rmlhchtj86jn7l16be01t.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAsu_Q9RUSNPjJxxdZzF35ig8XzoOo4fPU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "738366235844-irtcju16vj3rmlhchtj86jn7l16be01t.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "738366235844-l8o9ulbujms2ofq7doent42rqac9968o.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.urbavitachat"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
