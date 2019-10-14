@@ -12,10 +12,10 @@ const options = {
     title: 'Select Image',
     // customButtons: [{ name: 'fb', title: 'Choose Photo from Facebook' }],
     storageOptions: {
-      skipBackup: true,
-      path: 'images',
+        skipBackup: true,
+        path: 'images',
     },
-  };
+};
 
 class ChatScreen extends Component {
     constructor(props) {
@@ -23,7 +23,6 @@ class ChatScreen extends Component {
         this.state = {
             messages: [],
             dialogVisible: false,
-            avatarSource:'',
         }
         // const { navigation } = this.props;
         this.user = firebase.auth().currentUser;
@@ -55,6 +54,8 @@ class ChatScreen extends Component {
                     _id: child.val().createdAt,
                     text: child.val().text,
                     createdAt: new Date(child.val().createdAt),
+                    image: child.val().image,
+                    file: child.val().file,
                     user: {
                         _id: child.val().uid,
                         avatar: 'avatar'
@@ -71,6 +72,7 @@ class ChatScreen extends Component {
         });
     }
     componentDidMount() {
+
         this.listenForItems(this.chatRefData);
     }
     componentWillUnmount() {
@@ -81,8 +83,12 @@ class ChatScreen extends Component {
         // this.setState({
         //     messages: GiftedChat.append(this.state.messages, messages),
         // });
+        console.log('btn Click');
+        // var imageUri = this.state.avatarSource == null ? '' : this.state.avatarSource;
+        // var fileUri = this.state.fileSource == null ? '' : this.state.fileSource;
         messages.forEach(message => {
             //var message = message[0];
+
             var now = new Date().getTime();
             this.chatRef.push({
                 _id: now,
@@ -91,8 +97,8 @@ class ChatScreen extends Component {
                 uid: this.user.uid,
                 fuid: uid,
                 email: email,
-                file:'',
-                image:'',
+                file: message.file,
+                image: message.image,
                 order: -1 * now
             });
         });
@@ -104,7 +110,7 @@ class ChatScreen extends Component {
                     visible={this.state.dialogVisible}
                     title="Select the file type"
                     onTouchOutside={() => this.setState({ dialogVisible: false })} >
-                    <View style={{ flexDirection: 'row' , justifyContent:'space-between'}}>
+                    <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                         <TouchableEffect onPress={this.filePicker.bind(this)}>
                             <Text>
                                 File
@@ -112,7 +118,7 @@ class ChatScreen extends Component {
                         </TouchableEffect>
                         <TouchableEffect onPress={this.imagePicker.bind(this)}>
                             <Text>
-                               Image 
+                                Image
                             </Text>
                         </TouchableEffect>
                     </View>
@@ -124,29 +130,13 @@ class ChatScreen extends Component {
                     onSend={this.onSend.bind(this)}
                     alwaysShowSend
                     renderActions={() => {
-                        if (Platform.OS === "ios") {
-                            return (
-                                <Icon
-                                    style={{ fontSize: 20, marginBottom: 12, marginStart: 5 }}
-                                    name="paperclip"
-                                    type="AntDesign"
-
-                                    //   hitSlop={{ top: 20, bottom: 20, left: 50, right: 50 }}
-                                    // //   color={this.state.startAudio ? "red" : "black"}
-                                    //   style={{
-
-                                    //     bottom: 50,
-                                    //     position: "absolute", 
-                                    //     shadowColor: "#000",
-                                    //     shadowOffset: { width: 0, height: 0 },
-                                    //     shadowOpacity: 0.5,
-                                    //     zIndex: 2,
-                                    //     backgroundColor: "transparent",
-                                    //     justi
-                                    //   }}
-                                    onPress={this.openPicker.bind(this)}
-                                />);
-                        }
+                        return (
+                            <Icon
+                                style={{ fontSize: 20, marginBottom: 12, marginStart: 5 }}
+                                name="paperclip"
+                                type="AntDesign"
+                                onPress={this.openPicker.bind(this)}
+                            />);
                     }}
                     user={{
                         _id: this.user.uid,
@@ -159,42 +149,65 @@ class ChatScreen extends Component {
         // alert('Picker click');
         this.setState({ dialogVisible: true });
     }
-   filePicker =() => {
-    this.setState({ dialogVisible : false});
+    filePicker = () => {
+        this.setState({ dialogVisible: false });
         try {
-            const res =  DocumentPicker.pick({
-              type: [DocumentPicker.types.allFiles],
+            const res = DocumentPicker.pick({
+                type: [DocumentPicker.types.allFiles],
+            }).then((response) => {
+                console.log('Uploaded file in response ', response.uri)
+                var now = new Date().getTime();
+                this.chatRef.push({
+                    _id: now,
+                    text: response.uri,
+                    createdAt: now,
+                    uid: this.user.uid,
+                    fuid: uid,
+                    email: email,
+                    file: response.uri,
+                    image: '',
+                    order: -1 * now
+                });
             });
             console.log("Uploaded file is ", res);
-          } catch (err) {
+        } catch (err) {
             if (DocumentPicker.isCancel(err)) {
-              // User cancelled the picker, exit any dialogs or menus and move on
+                // User cancelled the picker, exit any dialogs or menus and move on
             } else {
-              throw err;
+                throw err;
             }
-          }
-          
+        }
+
     }
-    imagePicker =() => {
+    imagePicker = () => {
         // this.setState({ dialogVisible : false});
-        
-          ImagePicker.showImagePicker(options, (response) => {
+        ImagePicker.showImagePicker(options, (response) => {
             console.log('Response = ', response);
-           
             if (response.didCancel) {
-              console.log('User cancelled image picker');
+                console.log('User cancelled image picker');
             } else if (response.error) {
-              console.log('ImagePicker Error: ', response.error);
+                console.log('ImagePicker Error: ', response.error);
             } else {
-              const source = { uri: response.uri };
+                const source = { uri: response.uri };
                 console.log("Data in response ==> ", response.uri);
-              this.setState({
-                dialogVisible : false,
-                avatarSource: source,
-              });
+                this.setState({
+                    dialogVisible: false,
+                });
+                var now = new Date().getTime();
+                this.chatRef.push({
+                    _id: now,
+                    text: "",
+                    createdAt: now,
+                    uid: this.user.uid,
+                    fuid: uid,
+                    email: email,
+                    file: '',
+                    image: response.uri,
+                    order: -1 * now
+                });
             }
-          });
-          console.log('Image   ==> ', this.state.avatarSource)
+        });
+
     }
 
 } export default ChatScreen;
